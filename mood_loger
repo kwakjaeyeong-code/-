@@ -1,0 +1,43 @@
+from datetime import datetime
+
+def save_mood(mood, note):
+    today = datetime.now().strftime("%Y-%m-%d")
+    with open("mood_log.txt", "a", encoding="utf-8") as f:
+        f.write(f"{today} | 기분: {mood} | 메모: {note}\n")
+
+def show_logs():
+    try:
+        with open("mood_log.txt", "r", encoding="utf-8") as f:
+            print("\n📒 지금까지의 기록")
+            print("-" * 30)
+            print(f.read())
+    except FileNotFoundError:
+        print("아직 기록이 없습니다.")
+
+def main():
+    while True:
+        print("\n=== Today Mood Logger ===")
+        print("1. 오늘의 기분 기록하기")
+        print("2. 기록 보기")
+        print("3. 종료")
+
+        choice = input("선택: ")
+
+        if choice == "1":
+            mood = input("오늘 기분은 어때요? 😊😐😢 : ")
+            note = input("한마디 메모: ")
+            save_mood(mood, note)
+            print("✅ 기분이 저장되었습니다!")
+
+        elif choice == "2":
+            show_logs()
+
+        elif choice == "3":
+            print("프로그램을 종료합니다.")
+            break
+
+        else:
+            print("잘못된 입력입니다.")
+
+if __name__ == "__main__":
+    main()
